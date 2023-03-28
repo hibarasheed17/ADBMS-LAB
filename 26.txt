@@ -1,0 +1,41 @@
+-- 
+-- Roll No: 26
+-- Name: HIBA
+-- Program: <program name>
+-- 
+
+
+--
+-- Table structure for table employee
+--
+
+CREATE TABLE employee(ssn INT PRIMARY KEY, name VARCHAR(20), address VARCHAR(20), dnum CHAR(5), super_ssn int);
+alter table employee add foreign key (super_ssn) references employee(ssn);
+alter table employee add foreign key (dnum) references dept(dno);
+
+--
+-- Table structure for table dept
+--
+
+CREATE TABLE dept(dno CHAR(5) PRIMARY KEY, dname VARCHAR(10) UNIQUE, location VARCHAR(15), mgr_ssn int);
+alter table dept add foreign key (mgr_ssn) references employee(ssn);
+
+--
+-- Dumping data for table employee
+--
+
+INSERT INTO employee VALUES(104, 'PATHU', 'MUKKAM', 'FG500'), (103, 'BEEVI', 'THRIPRAYAR', 'RD400'), (100, 'HIBA', 'THRISSUR', 'AB100'), (101, 'FAHMA', 'TIRUR', 'XY200'), (102, 'AYISHA', 'KOLLAM', 'FG300');
+
+
+--
+-- Dumping data for table dept
+--
+
+INSERT INTO dept VALUES('AB100', 'CODE', 'US'), ('FG500', 'DESIGN', 'UK'), ('XY200', 'TEST', 'AUS'), ('RD400', 'EDIT', 'LONDON'), ('FG300', 'DEBUGGING', 'BANGLORE');
+
+--
+-- SQl Query Statements
+--
+
+select * from employee;
+select * from dept;
