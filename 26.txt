@@ -6,36 +6,105 @@
 
 
 --
--- Table structure for table employee
---
-
-CREATE TABLE employee(ssn INT PRIMARY KEY, name VARCHAR(20), address VARCHAR(20), dnum CHAR(5), super_ssn int);
-alter table employee add foreign key (super_ssn) references employee(ssn);
-alter table employee add foreign key (dnum) references dept(dno);
-
---
 -- Table structure for table dept
 --
 
-CREATE TABLE dept(dno CHAR(5) PRIMARY KEY, dname VARCHAR(10) UNIQUE, location VARCHAR(15), mgr_ssn int);
-alter table dept add foreign key (mgr_ssn) references employee(ssn);
+create table dept(dno char(5) primary key,dname varchar(10),location varchar(150));
+alter table dept add mgr_ssn int;
+alter table dept add constraint dept_mgr_ssn_fkey foreign key(mgr_ssn) references employee(ssn);
+alter table dept modify dno char(5) primary key;
+alter table dept add mgr_start_date date;
+
+
 
 --
--- Dumping data for table employee
+-- Table structure for table employee
 --
 
-INSERT INTO employee VALUES(104, 'PATHU', 'MUKKAM', 'FG500'), (103, 'BEEVI', 'THRIPRAYAR', 'RD400'), (100, 'HIBA', 'THRISSUR', 'AB100'), (101, 'FAHMA', 'TIRUR', 'XY200'), (102, 'AYISHA', 'KOLLAM', 'FG300');
+create table employee(ssn int primary key,name varchar(10),address varchar(20),dnum char(5));
+alter table employee add super_ssn int;
+alter table employee add constraint employee_super_ssn_fkey foreign key(super_ssn) references employee(ssn);
+alter table employee add constraint employee_dnum_fkey foreign key(dnum) references dept(dno);
+alter table employee add salary int check(salary>=20000 and salary<=60000);
+
+
+
+
+--
+-- Table structure for table project
+--
+
+create table project(pnumber int primary key,pname varchar(10),plocation varchar(15),dnum char(5),foreign key(dnum) references dept(dno));
+
+--
+-- Table structure for table workson
+--
+
+create table workson(essn int,pno int,hours float(3,1));
+alter table  workson add primary key(essn,pno);
+alter table workson add foreign key(essn) references employee(ssn);
+alter table workson add foreign key(pno) references project(pnumber);
+
 
 
 --
 -- Dumping data for table dept
 --
 
-INSERT INTO dept VALUES('AB100', 'CODE', 'US'), ('FG500', 'DESIGN', 'UK'), ('XY200', 'TEST', 'AUS'), ('RD400', 'EDIT', 'LONDON'), ('FG300', 'DEBUGGING', 'BANGLORE');
+insert into dept values(2,"sales","Bnglr",111);
+insert into dept values(1,"marketing","Chennai",112);
+insert into dept values(3,"analyst","pune",113);
+insert into dept values(4,"finance","bnglr",114);
+insert into dept values(5,"purchase","delhi",115);
+update dept set mgr_start_date='2023-04-20'  where dno=1;
+update dept set mgr_start_date='2023-04-21'  where dno=2;
+update dept set mgr_start_date='2023-04-22'  where dno=3;
+update dept set mgr_start_date='2023-04-23'  where dno=4;
+update dept set mgr_start_date='2023-04-24'  where dno=5;
+
+
+--
+-- Dumping data for table employee
+--
+
+insert into employee values(100,"Shaima","Aleemas",1,111);
+insert into employee values(101,"Alia","Aleemazz",2,121);
+insert into employee values(102,"Nazri","Almzz",3,141);
+insert into employee values(103,"Haleema","Aljjz",151);
+insert into employee values(104,"Ameen","Almassss",161);
+update employee set salary=20000 where ssn=100;
+update employee set salary=40000 where ssn=101;
+update employee set salary=50000 where ssn=102;
+update employee set salary=30000 where ssn=103;
+update employee set salary=45000 where ssn=104;
+
+
+
+--
+-- Dumping data for table project
+--
+
+insert into project values(01,"Milk Dairy","DElhi");
+insert into project values(02,"Jimm","Banglore",2);
+insert into project values(03,"Blue Book","Mumbai",3);
+insert into project values(04,"Titan","Coimbatore",4);
+insert into project values(05,"X Lab","Kochi",5);
+
+--
+-- Dumping data for table workson
+--
+insert into workson values(100,1,32.4);
+insert into workson values(101,2,51.4);
+insert into workson values(102,3,62.9);
+insert into workson values(103,4,64.8);
+insert into workson values(104,5,71.0);
+
+
 
 --
 -- SQl Query Statements
 --
 
-select * from employee;
-select * from dept;
+-- -----SQL query statments preceeded by the its question-------- # This line may be removed in the actual file
+-- -----Question number should be commented---------------#This line may be removed in the actual file
+
